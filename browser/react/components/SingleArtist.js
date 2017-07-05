@@ -1,32 +1,49 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import Songs from './Songs';
+import AllAlbums from './AllAlbums';
 
-export default class AllAlbums extends Component {
+export default class SingleArtist extends Component {
 
   constructor(){
     super();
-    this.state = { currentArtist: {}};
+    this.state = { 
+      artist : {},
+      albums : [],
+      songs : []
+    };
   }
 
   componentDidMount(){
     var artistId = this.props.match.params.artistId;
-    axios.get(`/api/artists/${artistId}`)
-    .then(res => res.data)
-    .then(artist => this.setState({
-      currentArtist: artist
-    }));
+    console.log('artist ID??? ', artistId);
+    var artistPromise = axios.get(`/api/artists/${artistId}`);
+    var albumsPromise = axios.get(`api/artists/${artistId}/albums`);
+    var songsPromise = axios.get(`api/artists/${artistId}/songs`);
+
+    Promise.all([artistPromise, albumsPromise, songsPromise])
+    .then(res => {
+      this.setState({
+        artist: res[0].data,
+        albums : res[1].data,
+        songs : res[2].data
+      });
+    })
+    .catch(function(err){
+      console.log(err);
+    });
   }
 
   render () {
-    const artist = this.state.currentArtist;
-    console.log('hi', artist);
+    console.log('hi', this.state);
+    var information = this.state;
     return (
       <div>
-        <h3>ARTIST NAME</h3>
-        <h4>ALBUMS</h4>
-        <h4>SONGS</h4>
+        <h3>{information.artist.name}</h3>
+        <AllAlbums albums={information.albums}/>
+        <Songs songs={information.songs}/>
       </div>
-    );
+      );
   }
 }
