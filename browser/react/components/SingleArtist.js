@@ -18,7 +18,6 @@ export default class SingleArtist extends Component {
 
   componentDidMount(){
     var artistId = this.props.match.params.artistId;
-    console.log('artist ID??? ', artistId);
     var artistPromise = axios.get(`/api/artists/${artistId}`);
     var albumsPromise = axios.get(`api/artists/${artistId}/albums`);
     var songsPromise = axios.get(`api/artists/${artistId}/songs`);
@@ -36,19 +35,6 @@ export default class SingleArtist extends Component {
     });
   }
 
-  // render () {
-  //   console.log('hi', this.state);
-  //   var information = this.state;
-  //   return (
-  //     <div>
-  //       <h3>{information.artist.name}</h3>
-  //       <AllAlbums albums={information.albums}/>
-  //       <Songs songs={information.songs}/>
-  //     </div>
-  //     );
-  // }
-
-
   render () {
 
     const artist = this.state.artist; // or however you've named it
@@ -64,10 +50,10 @@ export default class SingleArtist extends Component {
 
           <Route path="/artists/:artistId/albums" render={
   (routeProps) => <AllAlbums albums={artistAlbums} />
-} />
+} exact/>
           <Route path="/artists/:artistId/songs" render={
   (routeProps) => <Songs songs={artistSongs} />
-} />
+} exact/>
       </div>
     );
   }

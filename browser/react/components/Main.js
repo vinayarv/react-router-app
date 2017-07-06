@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import AllAlbums from './AllAlbums';
 import SingleAlbum from './SingleAlbum';
 import Sidebar from './Sidebar';
 import Player from './Player';
@@ -25,9 +24,9 @@ export default class Main extends Component {
           <div className="col-xs-10">
             <Route path= '/' component={StatefulAlbums} exact />
             <Route path= '/albums' component={StatefulAlbums} exact />
-            <Route path= '/albums/:albumId' component={SingleAlbum} />
+            <Route path= '/albums/:albumId' component={SingleAlbum} exact/>
             <Route path= '/artists' component={AllArtists} exact />
-            <Route path= '/artists/:artistId' component={SingleArtist} />
+            <Route path= '/artists/:artistId' component={SingleArtist} exact/>
           </div>
           <Player />
         </div>

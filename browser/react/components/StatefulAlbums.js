@@ -21,5 +21,4 @@ export default class StatefulAlbums extends Component {
   render(){
     return (<AllAlbums albums={this.state.albums}/>)
   }
-
 }
