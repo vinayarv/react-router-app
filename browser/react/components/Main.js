@@ -5,7 +5,9 @@ import Player from './Player';
 import AllArtists from './AllArtists';
 import SingleArtist from './SingleArtist';
 import StatefulAlbums from './StatefulAlbums';
-import { HashRouter, Route} from 'react-router-dom';
+import EmailAlbum from './EmailAlbum'
+import HandleEmail from './HandleEmail'
+import { HashRouter, Route, Switch} from 'react-router-dom';
 
 export default class Main extends Component {
 
@@ -22,11 +24,16 @@ export default class Main extends Component {
             <Sidebar/>
           </div>
           <div className="col-xs-10">
+          <Switch>
             <Route path= '/' component={StatefulAlbums} exact />
+            <Route path="/albums/:albumId/add-post" component={HandleEmail} exact />
+            <Route path="/albums/:albumId/new-post" component={EmailAlbum}exact />
             <Route path= '/albums' component={StatefulAlbums} exact />
             <Route path= '/albums/:albumId' component={SingleAlbum} exact/>
             <Route path= '/artists' component={AllArtists} exact />
-            <Route path= '/artists/:artistId' component={SingleArtist} exact/>
+            <Route path= '/artists/:artistId' component={SingleArtist} />
+            <Route component={StatefulAlbums} />
+            </Switch>
           </div>
           <Player />
         </div>

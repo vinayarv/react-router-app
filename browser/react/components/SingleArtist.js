@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Route} from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import axios from 'axios';
 import Songs from './Songs';
 import AllAlbums from './AllAlbums';
+import StatefulAlbums from './StatefulAlbums'
 
 export default class SingleArtist extends Component {
 
   constructor(){
     super();
-    this.state = { 
+    this.state = {
       artist : {},
       albums : [],
       songs : []
@@ -47,13 +48,19 @@ export default class SingleArtist extends Component {
           <li><Link to={`/artists/${artist.id}/albums`}>ALBUMS</Link></li>
           <li><Link to={`/artists/${artist.id}/songs`}>SONGS</Link></li>
         </ul>
-
+         <Switch>
           <Route path="/artists/:artistId/albums" render={
-  (routeProps) => <AllAlbums albums={artistAlbums} />
+        (routeProps) => <AllAlbums albums={artistAlbums} />
 } exact/>
           <Route path="/artists/:artistId/songs" render={
   (routeProps) => <Songs songs={artistSongs} />
 } exact/>
+
+
+      {/* <Redirect to={{
+        pathname: '/'
+      }}/> */}
+      </Switch>
       </div>
     );
   }
